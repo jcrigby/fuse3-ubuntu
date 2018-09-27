@@ -2,7 +2,7 @@ FUSE_RELEASE ?= 3.1.1
 REBUILD      ?= 3
 MAINTAINER   ?= bkryza@gmail.com
 
-DISTS = trusty wily xenial
+DISTS = trusty wily xenial beaver
 
 all: $(DISTS)
 
@@ -21,7 +21,7 @@ $(DISTS): download
 	sed -i "s/{{ DISTRIBUTION }}/$@/g" debian/changelog
 	sed -i "s/{{ REBUILD }}/${REBUILD}/g" debian/changelog
 	dh_make -e ${MAINTAINER} -p fuse3 -c gpl2 -l --f ../fuse-${FUSE_RELEASE}.tar.gz
-	dpkg-buildpackage -rfakeroot
+	dpkg-buildpackage -rfakeroot -uc -us
 	cd ..
 	mkdir -p package/$@/binary-amd64
 	mkdir -p package/$@/source
@@ -37,7 +37,7 @@ $(DISTS): download
 	sed -i "s/{{ DISTRIBUTION }}/$@/g" debian/changelog
 	sed -i "s/{{ REBUILD }}/${REBUILD}/g" debian/changelog
 	dh_make -e bkryza@gmail.com -p libfuse3 -c gpl2 -l --f ../fuse-${FUSE_RELEASE}.tar.gz
-	dpkg-buildpackage -rfakeroot
+	dpkg-buildpackage -rfakeroot -uc -us
 	cd ..
 	mkdir -p package/$@/binary-amd64
 	mkdir -p package/$@/source
